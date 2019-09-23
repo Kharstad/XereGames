@@ -76,10 +76,19 @@
   --ion-color-light-tint: #f5f6f9;
 
   /** Gamer **/
-  --ion-color-gamer: #0078c2;
-  --ion-color-gamer-rgb: 244, 244, 244;
+  --ion-color-gamer: #ffaa00;
+  --ion-color-gamer-rgb: 255, 200, 000;
   --ion-color-gamer-contrast: #000000;
   --ion-color-gamer-contrast-rgb: 0, 0, 0;
-  --ion-color-gamer-shade: #004169;
-  --ion-color-gamer-tint: #004169;
+  --ion-color-gamer-shade: #eebbaa;
+  --ion-color-gamer-tint: #eebbaa;
+}
+
+.gamer {
+  --ion-color-base: var(--ion-color-gamer);
+  --ion-color-base-rgb: var(--ion-color-gamer-rgb);
+  --ion-color-contrast: var(--ion-color-gamer-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-gamer-contrast-rgb);
+  --ion-color-shade: var(--ion-color-gamer-shade);
+  --ion-color-tint: var(--ion-color-gamer-tint);
 }

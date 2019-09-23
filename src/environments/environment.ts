@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig:{
+    apiKey: "AIzaSyAkpBjGnKSEoY7vtKeNnuC6KMblYe-Zk2g",
+    authDomain: "xeregames-ionic.firebaseapp.com",
+    databaseURL: "https://xeregames-ionic.firebaseio.com",
+    projectId: "xeregames-ionic",
+    storageBucket: "xeregames-ionic.appspot.com",
+    messagingSenderId: "1044413036357",
+    appId: "1:1044413036357:web:e3cab06069ab99686d302c"
+  }
 };
 
 /*

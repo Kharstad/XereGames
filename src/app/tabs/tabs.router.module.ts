@@ -18,12 +18,12 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab2',
+        path: 'listPlayer',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import('../pages/list-player/list-player.module').then(m => m.ListPlayerPageModule)
           }
         ]
       },
@@ -42,11 +42,13 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../pages/add-player/add-player.module').then(m => m.AddPlayerPageModule)
+            loadChildren: () => import('../pages/add-player/add-player.module').then(m => m.AddPlayerPageModule)
+            
+            //loadChildren: '../pages/add-player/add-player.module#AddPlayerPageModule'
           }
         ]
       },
+      
       {
         path: '',
         redirectTo: '/tabs/tab1',
