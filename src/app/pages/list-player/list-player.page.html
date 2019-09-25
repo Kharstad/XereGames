@@ -13,13 +13,21 @@
     </ion-fab-button>
   </ion-fab>
 
-<ion-list *ngIf="players | async as lp">
-  <ion-item *ngFor="let p of lp">
-    <ion-avatar slot="start"> 
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-    </ion-avatar>
-    <ion-label>{{p.nickname}}</ion-label>
-    <ion-text>{{p.email}}</ion-text>
-  </ion-item>
-</ion-list>
+  <ion-list *ngIf="players">
+    <ion-item *ngFor="let p of players" routerLink="/tabs/perfilPlayer/{p.key}">
+      <ion-avatar slot="start"> 
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      </ion-avatar>
+      <ion-label>{{p.nickname}}</ion-label>
+      <ion-text>{{p.email}}</ion-text>
+    </ion-item>
+  </ion-list>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
 </ion-content>

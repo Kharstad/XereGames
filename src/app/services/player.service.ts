@@ -28,4 +28,8 @@ export class PlayerService {
       )
     )
   }
+
+  get(id){
+    return this.fire.collection("players").doc<Player>(id).valueChanges();
+  }
 }
