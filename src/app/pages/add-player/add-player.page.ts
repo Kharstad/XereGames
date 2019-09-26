@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Player } from 'src/app/model/player';
-import { PlayerService } from '../../services/player.service';
+import { PlayerService } from 'src/app/services/player.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -14,39 +14,37 @@ export class AddPlayerPage implements OnInit {
   protected player: Player = new Player;
 
   constructor(
-    protected playerService:PlayerService,
-    protected alertController:AlertController,
+    protected playerService: PlayerService,
+    protected alertController: AlertController,
     protected router:Router
   ) { }
 
   ngOnInit() {
   }
 
-  onsubmit(form){
+  onsubmit(form) {
     this.playerService.save(this.player).then(
-      res=>{
+      res => {
         form.reset();
         this.player = new Player;
-        //console.log("Cadastrado");
-        this.presentAlert("Aviso!","Cadastrado!")
-        this.router.navigate(['/tabs/listPlayer'])
+        //+console.log("Cadastrado!");
+        this.presentAlert("Aviso", "Cadastrado!")
+        this.router.navigate(['/tabs/listPlayer']);
       },
-      erro=>{
+      erro => {
         console.log("Erro: " + erro);
-        this.presentAlert("Erro","Não foi possível efetuar o cadastro!")
+        this.presentAlert("Erro", "Não foi possivel cadastrar!")
       }
     )
   }
-
-  //Alerts
-  async presentAlert(tipo:string, texto:string) {
+  //Alerts-------------------
+  async presentAlert(tipo: string, texto: string) {
     const alert = await this.alertController.create({
       header: tipo,
       //subHeader: 'Subtitle',
       message: texto,
-      buttons: ['Okay chefe']
+      buttons: ['OK']
     });
-
     await alert.present();
   }
 }
