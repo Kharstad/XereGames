@@ -28,6 +28,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'listListGame',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/list-list-game/list-list-game.module').then(m => m.ListListGamePageModule)
+          }
+        ]
+      },
+      {
         path: 'perfilPlayer/:id',
         children: [
           {
@@ -38,12 +48,22 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab3',
+        path: 'perfilGame/:id',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+              import('../pages/perfil-game/perfil-game.module').then(m => m.PerfilGamePageModule)
+          }
+        ]
+      },
+      {
+        path: 'listGame',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/list-game/list-game.module').then(m => m.ListGamePageModule)
           }
         ]
       },
@@ -55,6 +75,15 @@ const routes: Routes = [
             loadChildren: () => import('../pages/add-player/add-player.module').then(m => m.AddPlayerPageModule)
             
             //loadChildren: '../pages/add-player/add-player.module#AddPlayerPageModule'
+          }
+        ]
+      },
+      {
+        path: 'addGame',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../pages/add-game/add-game.module').then(m => m.AddGamePageModule)
           }
         ]
       },
