@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Cadastro do Player</ion-title>
+    <ion-title *ngIf="!id">Cadastro do Player</ion-title>
+    <ion-title *ngIf="id">Atualizar do Player</ion-title>
   </ion-toolbar>
 </ion-header>
 

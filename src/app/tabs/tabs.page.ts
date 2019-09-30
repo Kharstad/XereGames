@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
+  protected players: any;
+
   constructor() {}
 
 }

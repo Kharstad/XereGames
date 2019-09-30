@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-list-player',
@@ -11,15 +13,21 @@ export class ListPlayerPage implements OnInit {
   protected players: any;
 
   constructor(
-    protected playerService: PlayerService
+    protected playerService: PlayerService,
+    private router: Router,
+    protected alertController: AlertController
   ) { }
 
   ngOnInit() {
-    this.playerService.gelAll().subscribe(
-      res => {
-        this.players = res;
-      }
-    )
+    this.refreshPlayers()
+  }
+
+  apagar(player: any) {
+    this.presentAlertConfirm(player)
+  }
+
+  editar(player){
+    this.router.navigate(['/tabs/addPlayer', player.key])
   }
 
   async doRefresh(event) {
@@ -33,5 +41,57 @@ export class ListPlayerPage implements OnInit {
         }, 500);
       }
     );
+  }
+
+  refreshPlayers(){
+    this.playerService.gelAll().subscribe(
+      res => {
+        this.players = res;
+      }
+    )
+  }
+
+  //Alerts
+  async presentAlert(tipo: string, texto: string) {
+    const alert = await this.alertController.create({
+      header: tipo,
+      //subHeader: 'Subtitle',
+      message: texto,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async presentAlertConfirm(player) {
+    const alert = await this.alertController.create({
+      header: 'Apagar Player',
+      message: 'Deseja realmente apagar o player?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Sim',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.playerService.remove(player).then(
+              res=>{
+                this.presentAlert("Aviso!", "Player deletado com sucesso");
+                this.refreshPlayers()
+              },
+              erro=>{
+                this.presentAlert("Erro!", "Falha ao deletar o player")
+              }
+            )
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
