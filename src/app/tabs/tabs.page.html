@@ -9,12 +9,13 @@
     <ion-tab-button tab="listPlayer">
       <ion-icon name="contacts"></ion-icon>
       <ion-label>Players</ion-label>
-      <ion-badge color="danger" style="position: absolute" *ngIf="players">{{players}}</ion-badge>
+      <ion-badge color="danger" *ngIf="quantPlayer > 0" >{{quantPlayer}}</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="listListGame">
       <ion-icon name="logo-game-controller-a"></ion-icon>
       <ion-label>Games</ion-label>
+      <ion-badge color="danger" *ngIf="quantGame > 0">{{quantGame}}</ion-badge>
     </ion-tab-button>
   </ion-tab-bar>
 

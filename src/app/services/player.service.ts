@@ -21,7 +21,9 @@ export class PlayerService {
         email: player.email,
         pws: player.pws,
         foto: player.foto,
-        ativo: true
+        ativo: true,
+        lat: player.lat,
+        long: player.long,
       });
   }
 
