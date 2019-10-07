@@ -16,6 +16,8 @@ export class AddPlayerPage implements OnInit {
   protected player: Player = new Player;
   protected id: any = null;
   protected preview: any = null;
+  protected posLat: number = 0;
+  protected posLong: number = 0;
 
   constructor(
     protected playerService: PlayerService,
@@ -36,6 +38,7 @@ export class AddPlayerPage implements OnInit {
         erro => this.id = null
       )
     }
+    this.localAtual()
   }
 
   onsubmit(form) {
@@ -43,12 +46,9 @@ export class AddPlayerPage implements OnInit {
       this.presentAlert("Erro", "Cadastre uma foto de perfil!")
     } else {
       this.player.foto = this.preview;
-      this.geolocation.getCurrentPosition().then((resp) => {
-        this.player.lat = resp.coords.latitude
-        this.player.long = resp.coords.longitude
-      }).catch((error) => {
-        console.log('Error getting location', error);
-      });
+      this.player.lat = this.posLat;
+      this.player.long = this.posLong;
+
       if (!this.id) {
         this.playerService.save(this.player).then(
           res => {
@@ -95,6 +95,17 @@ export class AddPlayerPage implements OnInit {
     }, (err) => {
       // Handle error
     });
+  }
+
+  localAtual() {
+    this.geolocation.getCurrentPosition().then(
+      resp => {
+        this.posLat = resp.coords.latitude;
+        this.posLong = resp.coords.longitude;
+      }).catch(
+        error => {
+          console.log('Não foi possivel pegar sua localização!', error);
+        });
   }
 
   //Alerts

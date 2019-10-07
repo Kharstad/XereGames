@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'list-game', loadChildren: './pages/list-game/list-game.module#ListGamePageModule' },
   { path: 'perfil-game', loadChildren: './pages/perfil-game/perfil-game.module#PerfilGamePageModule' },
   { path: 'list-list-game', loadChildren: './pages/list-list-game/list-list-game.module#ListListGamePageModule' },
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
   // { path: 'add-player', loadChildren: './pages/add-player/add-player.module#AddPlayerPageModule' }
 ];
 @NgModule({
