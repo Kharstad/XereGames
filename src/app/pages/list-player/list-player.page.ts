@@ -32,7 +32,7 @@ export class ListPlayerPage implements OnInit {
 
   async doRefresh(event) {
     //console.log('Begin async operation');
-    this.playerService.gelAll().subscribe(
+    this.playerService.gelAll().subscribe( 
       res => {
          this.players = res;
         setTimeout(() => {

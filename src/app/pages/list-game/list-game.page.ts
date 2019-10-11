@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from '../../services/game.service';
+import { GameService } from '../../services/game.service'; 
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-list-game',
@@ -11,7 +13,9 @@ export class ListGamePage implements OnInit {
   protected game: any;
 
   constructor(
-    protected gameService: GameService
+    protected gameService: GameService,
+    protected router: Router,
+    protected alertController: AlertController
   ) { }
 
   ngOnInit() {

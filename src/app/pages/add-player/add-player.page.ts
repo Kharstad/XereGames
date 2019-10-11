@@ -17,7 +17,7 @@ export class AddPlayerPage implements OnInit {
   protected id: any = null;
   protected preview: any = null;
   protected posLat: number = 0;
-  protected posLong: number = 0;
+  protected posLong: number = 0; 
 
   constructor(
     protected playerService: PlayerService,
@@ -47,7 +47,7 @@ export class AddPlayerPage implements OnInit {
     } else {
       this.player.foto = this.preview;
       this.player.lat = this.posLat;
-      this.player.long = this.posLong;
+      this.player.long = this.posLong; 
 
       if (!this.id) {
         this.playerService.save(this.player).then(
@@ -55,7 +55,7 @@ export class AddPlayerPage implements OnInit {
             form.reset();
             this.player = new Player;
             this.presentAlert("Aviso", "Cadastrado!")
-            this.router.navigate(['/tabs/listPlayer']);
+            this.router.navigate(['/']);
           },
           erro => {
             console.log("Erro: " + erro);

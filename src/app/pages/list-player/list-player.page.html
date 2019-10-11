@@ -18,21 +18,21 @@
     <ion-item-sliding *ngFor="let p of players">
       <ion-item-options side="start">
         <ion-item-option color="tertiary" expandable (click)="editar(p)">
-            <ion-icon name="create"></ion-icon>Editar
+          <ion-icon name="create"></ion-icon>Editar
         </ion-item-option>
       </ion-item-options>
 
       <ion-item routerLink="/tabs/perfilPlayer/{{p.key}}">
         <ion-avatar slot="start">
           <img src="{{p.foto}}">
-          </ion-avatar>
-          <ion-label>{{ p.nickname }}</ion-label>
-          <ion-text>{{ p.email }}</ion-text>
+        </ion-avatar>
+        <ion-label>{{ p.nickname }}</ion-label>
+        <ion-text>{{ p.email }}</ion-text>
       </ion-item>
 
       <ion-item-options side="end">
         <ion-item-option color="danger" expandable (click)="apagar(p)">
-            <ion-icon name="trash"></ion-icon>Deletar
+          <ion-icon name="trash"></ion-icon>Deletar
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
@@ -46,9 +46,9 @@
     </ion-item>
   </ion-list> -->
 
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
 
-  <ion-content>
+    <ion-content>

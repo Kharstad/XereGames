@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Game } from '../model/game';
 import { map } from 'rxjs/operators';
+import { Key } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class GameService {
       descricao: game.descricao,
       quant: game.quant,
       valor: game.valor,
-      ativo: true
+      ativo: true,
 
     })
   }
@@ -36,5 +37,13 @@ export class GameService {
 
   get(id){
     return this.fire.collection("game").doc<Game>(id).valueChanges();
+  }
+
+  update(game, id){
+    return this.fire.collection("game").doc<Game>(id).update(game); 
+  }
+
+  remove(game:any){
+    return this.fire.collection("game").doc(game.key).delete(); 
   }
 }
