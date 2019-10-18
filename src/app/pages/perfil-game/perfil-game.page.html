@@ -1,37 +1,24 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title><h1>{{game.nome}}</h1></ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-  
-    <ion-item lines="none">
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-    </ion-item>
-  
-    <ion-item>
-      <ion-text>
-        <h3>Descrição</h3>
-        <p>{{game.descricao}}</p>
-      </ion-text>
-    </ion-item>
-    <ion-item>
+  <ion-toolbar>
+    <ion-title>Perfil do Game</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-slides pager="true" [options]="slideOpts">
+    <ion-slide *ngFor="let foto of game.fotos">
+      <img src="{{foto}}">
+    </ion-slide>
+  </ion-slides>
+
+  <ion-item>
     <ion-text>
-        <h3>Plataforma</h3>
-        <p>{{game.console}}</p>
-      </ion-text>
-    </ion-item>
-    <ion-item>
-      <ion-text>
-        <h3>Valor</h3>
-        <p>{{game.valor}}</p>
-      </ion-text>
-    </ion-item>
-    <ion-item>
-      <ion-text>
-        <h3>Quantidade</h3>
-        <p>{{game.quant}}</p>
-      </ion-text>
-    </ion-item>
-  </ion-content>
+      <h2>{{game.nome}}</h2>
+      <p>Desrição: {{game.descricao}}</p>
+      <p>Console: {{game.console}}</p>
+      <p>Categoria: {{game.categoria}}</p>
+      <p>Valor: {{game.valor | currency : "BRL"}}</p>
+    </ion-text>
+  </ion-item>
+</ion-content>

@@ -18,16 +18,16 @@ export class AppComponent {
     private androidPermissions: AndroidPermissions
   ) {
     this.initializeApp();
-    this.permitir
+    this.permitir();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      //this.statusBar.styleDefault();
+      this.statusBar.backgroundColorByHexString("#f33");
       this.splashScreen.hide();
     });
   }
-
   permitir(){
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
       result => console.log('Has permission?',result.hasPermission),
@@ -38,7 +38,7 @@ export class AppComponent {
       result => console.log('Has permission?',result.hasPermission),
       err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.LOCATION)
     );
-
+    
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.STORAGE).then(
       result => console.log('Has permission?',result.hasPermission),
       err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.STORAGE)

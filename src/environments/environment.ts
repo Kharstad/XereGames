@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebaseConfig : {
+  firebaseConfig: {
     apiKey: "AIzaSyAkpBjGnKSEoY7vtKeNnuC6KMblYe-Zk2g",
     authDomain: "xeregames-ionic.firebaseapp.com",
     databaseURL: "https://xeregames-ionic.firebaseio.com",

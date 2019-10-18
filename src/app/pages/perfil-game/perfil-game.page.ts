@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Game } from '../../model/game';
-import { GameService } from '../../services/game.service';
+import { Game } from 'src/app/model/game';
+import { GameService } from 'src/app/services/game.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -12,6 +12,12 @@ export class PerfilGamePage implements OnInit {
 
   protected game: Game = new Game;
   private id: string = null;
+
+  slideOpts = {
+    initialSlide: 1,
+    slidesPerView: 3,
+    speed: 400
+  };
 
   constructor(
     protected gameService: GameService,

@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Player } from 'src/app/model/player';
 import { PlayerService } from 'src/app/services/player.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Platform } from '@ionic/angular';
+
 import {
   GoogleMaps,
   GoogleMap,
   GoogleMapsEvent,
   Marker,
-  MarkerCluster
+  MarkerCluster,
+  LocationService,
+  MyLocation
 } from '@ionic-native/google-maps';
-
 
 @Component({
   selector: 'app-add-player',
@@ -26,48 +27,54 @@ export class AddPlayerPage implements OnInit {
   protected id: any = null;
   protected preview: any = null;
   protected posLat: number = 0;
-  protected posLong: number = 0;
-  protected map: GoogleMap; 
+  protected posLng: number = 0;
+
+  protected map: GoogleMap;
 
   constructor(
     protected playerService: PlayerService,
     protected alertController: AlertController,
+    protected activedRoute: ActivatedRoute,
     protected router: Router,
-    private activatedRoute: ActivatedRoute,
     private camera: Camera,
     private geolocation: Geolocation,
     private platform: Platform
-  ) { }
+  ) {
+  }
 
   async ngOnInit() {
+    //Localização atual
+    this.localAtual();
+    //Plataforma e GoogleMaps
     await this.platform.ready();
     await this.loadMap();
 
-    this.id = this.activatedRoute.snapshot.paramMap.get("id");
+    //Pega Id para autilaização dos dados do Player
+    this.id = this.activedRoute.snapshot.paramMap.get("id");
     if (this.id) {
       this.playerService.get(this.id).subscribe(
         res => {
           this.player = res
+          this.preview = this.player.foto
         },
-        erro => this.id = null
+        //erro => this.id = null
       )
     }
-    this.localAtual()
   }
 
   onsubmit(form) {
     if (!this.preview) {
-      this.presentAlert("Erro", "Cadastre uma foto de perfil!")
+      this.presentAlert("Erro", "Deve inserir uma foto do perfil!");
     } else {
       this.player.foto = this.preview;
       this.player.lat = this.posLat;
-      this.player.long = this.posLong; 
-
+      this.player.lng = this.posLng;
       if (!this.id) {
         this.playerService.save(this.player).then(
           res => {
             form.reset();
             this.player = new Player;
+            //console.log("Cadastrado!");
             this.presentAlert("Aviso", "Cadastrado!")
             this.router.navigate(['/']);
           },
@@ -82,7 +89,7 @@ export class AddPlayerPage implements OnInit {
             form.reset();
             this.player = new Player;
             this.presentAlert("Aviso", "Atualizado!")
-            this.router.navigate(['/tabs/listPlayer']);
+            this.router.navigate(['/tabs/perfilPlayer', this.id]);
           },
           erro => {
             console.log("Erro: " + erro);
@@ -115,14 +122,14 @@ export class AddPlayerPage implements OnInit {
     this.geolocation.getCurrentPosition().then(
       resp => {
         this.posLat = resp.coords.latitude;
-        this.posLong = resp.coords.longitude;
+        this.posLng = resp.coords.longitude;
       }).catch(
         error => {
           console.log('Não foi possivel pegar sua localização!', error);
         });
   }
 
-  //Alerts
+  //Alerts-------------------
   async presentAlert(tipo: string, texto: string) {
     const alert = await this.alertController.create({
       header: tipo,
@@ -137,13 +144,55 @@ export class AddPlayerPage implements OnInit {
     this.map = GoogleMaps.create('map_canvas', {
       'camera': {
         'target': {
-          "lat": this.player.lat,
-          "lng": this.player.long,
+          "lat": this.posLat,
+          "lng": this.posLng
         },
-        'zoom': 10
+        'zoom': 15
       }
     });
     //this.addCluster(this.dummyData());
+    this.minhaLocalizacao();
   }
 
+  minhaLocalizacao() {
+    LocationService.getMyLocation().then(
+      (myLocation: MyLocation) => {
+        this.map.setOptions({
+          camera: {
+            target: myLocation.latLng
+          }
+        })
+        //Adiciona marcador no Mapa
+        let marker: Marker = this.map.addMarkerSync({
+          position: {
+            lat: myLocation.latLng.lat,
+            lng: myLocation.latLng.lng
+          },
+          icon: "#00ff00",
+          title: "Titulo",
+          snippet: "Comentário"
+        })
+        //adicionar eventos no mapa
+        marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(
+          res => {
+            marker.setTitle(this.player.nome)
+            marker.setSnippet(this.player.nickname)
+            marker.showInfoWindow()
+          }
+        )
+        //colocar pontos extras
+        this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe(
+          res => {
+            this.map.addMarker({
+              position: {
+                lat: res[0].lat,
+                lng: res[0].lng
+              }
+            })
+          }
+        )
+      }
+    )
+  }
 }
+

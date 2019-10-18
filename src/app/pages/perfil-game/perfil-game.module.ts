@@ -23,4 +23,4 @@ const routes: Routes = [
   ],
   declarations: [PerfilGamePage]
 })
-export class PerfilGamePageModule {}
+export class PerfilGamePageModule { }
